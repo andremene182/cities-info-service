@@ -4,7 +4,7 @@ var router = express.Router();
 const utilities = require ('../../../src/modules/utilities');
 const {getCoordinatesFromCity, getCityWeather, getCityBusinnesses} = require ('../../../src/modules/citiesInfo');
 
-
+//dev
 router.get('/', async(req, res) => {
 
   var i=0;
