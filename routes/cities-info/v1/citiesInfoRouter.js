@@ -11,19 +11,21 @@ router.get('/', async(req, res) => {
 
   var cities = utilities.getCitiesFromQuery(req);
 
-  for (i; i<cities.length; i++) {
+  /*for (i; i<cities.length; i++) {
     var {lat, lon} = await getCoordinatesFromCity(cities[i]);
 
-    console.log(lat,lon);
+    //console.log(lat,lon);
 
     var weather = await getCityWeather(lat,lon);
 
-    console.log(weather);
+    //console.log(weather);
     
     var businesses = await getCityBusinnesses(lat,lon);
-    console.log(businesses);
+    //console.log(businesses);
 
   }
+*/
+  res.json({test: 'test'});
 
   /*cities.forEach(async(city) => {
     console.log( getCoordinatesFromCity(city));
