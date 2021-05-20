@@ -1,7 +1,16 @@
-// https://api.openweathermap.org/geo/1.0/direct?q=new york&limit=1&appid=ad966cf8ef1a178b1c9550591d99bcd2
+/**
+ * Weather data (open weather) parser. It removes unecessary data from the obj
+ * @author Andrea Menegazzo
+ * @date 2021-05-20
+ * @param {obj} weather the weather obj
+ * @returns {obj} the parsed weather obj 
+ */
+module.exports.weatherDataParse = (weather) => {
 
+  delete weather.lat;
+  delete weather.lon;
+  delete weather.timezone;
+  delete weather.timezone_offset
 
-
-const openWeatherReq = () => {
-
+  return weather;
 }
