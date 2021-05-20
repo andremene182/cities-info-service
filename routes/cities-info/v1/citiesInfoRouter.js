@@ -2,35 +2,44 @@ var express = require('express');
 var router = express.Router();
 
 const utilities = require ('../../../src/modules/utilities');
-const {getCoordinatesFromCity, getCityWeather, getCityBusinnesses} = require ('../../../src/modules/citiesInfo');
+const {getCityInfoRequests, getCoordinatesRequests, parseCoordinatesResponses, parseCitiesInfoResponse} = require ('../../../src/modules/citiesInfo');
 
+const check = require('../../../src/middlewares/checkParams');
 
-router.get('/', async(req, res) => {
+//dev
+router.get('/', check.requiredParams(['cities']), async(req, res, next) => {
 
-  var i=0;
-
-  var cities = utilities.getCitiesFromQuery(req);
-
-  /*for (i; i<cities.length; i++) {
-    var {lat, lon} = await getCoordinatesFromCity(cities[i]);
-
-    //console.log(lat,lon);
-
-    var weather = await getCityWeather(lat,lon);
-
-    //console.log(weather);
-    
-    var businesses = await getCityBusinnesses(lat,lon);
-    //console.log(businesses);
-
+  var coordinatesArr, coordinatesResponses, cities;
+  
+  try {
+    cities = utilities.getCitiesFromQuery(req);
+  } catch (e) {
+    e.status = 400;
+    next(e);
   }
-*/
-  res.json({test: 'test'});
 
-  /*cities.forEach(async(city) => {
-    console.log( getCoordinatesFromCity(city));
-    //console.log(await getCoordinatesFromCity(city));
-  });*/
+  const weatherToExc = utilities.getWeatherToExcFromQuery(req);
+  const businessesSort = utilities.getBusinessesSortFromQuery(req);
+
+  try {
+    coordinatesResponses = await Promise.all(getCoordinatesRequests(cities));
+    coordinatesArr = parseCoordinatesResponses(coordinatesResponses);
+  } catch (e) {
+    e.message = "Please check your params. One or more cities in your request doesn't exist."
+    next(e);
+  }
+
+  var citiesInfoPromises = getCityInfoRequests(coordinatesArr, weatherToExc, businessesSort);
+  
+  try {
+    Promise.all(citiesInfoPromises.map(Promise.all, Promise))
+    .then(items =>{
+      res.json(parseCitiesInfoResponse(items, coordinatesArr));
+    });
+  } catch (e) {
+    e.message = "Service error. Please check your params and retry."
+    next(e)
+  }
 
 });
 

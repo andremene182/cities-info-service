@@ -7,7 +7,7 @@ chai.should();
 
 chai.use(chaiHttp);
 
-describe('Avvio Test', () => {
+describe('Test Start', () => {
 
   describe('GET /v1/cities-info', () => {
     const cities = 'padova,milano,bologna';
@@ -19,7 +19,6 @@ describe('Avvio Test', () => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have
-          .property('test')
           //
           done();
         })

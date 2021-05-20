@@ -21,23 +21,14 @@ app.use('/',citiesInfoRouter);
 // error handler
 app.use(function(err, req, res, next) {
 
-
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   process.env.NODE_ENV === 'development' ? console.log("Error Stack: ", err.stack) : true;
-  
-  if(err instanceof SyntaxError){
-   err.message = i18n.__('invalid_json');
-  }
-  console.log('errore', err.message);
 
-  /*const reqId = req.reqId;
-  const returnMessage = err.message.toString() || i18n.__('app_error');
-  const returnCode = err.returnCode || 2;*/
-
-  res.status(err.status || 500).json({err});
+  var errMessage = err.message.toString() || 'Service error. Please check your request params.';
+  var errStatus = err.status || 500;
+  res.status(errStatus).json({errStatus,errMessage});
   
 });
 
