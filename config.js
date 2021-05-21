@@ -1,5 +1,3 @@
-const path = require('path');
-
 //Environment
 const env = process.env.NODE_ENV;
 
