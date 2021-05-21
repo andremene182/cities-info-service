@@ -19,7 +19,7 @@ The service can be called in GET mode at the /cities-info endpoint with the foll
   Default: rating
   
   Example of request: 
-  https://yoursite/v1/cities-info?cities=milano,padova,bologna,new york,madrid&weather=daily&businesses_sort=distance
+  https://yoursite/v1/cities-info?cities=milano,padova,bologna,venezia,madrid&weather=daily&businesses_sort=distance
   
   The service response is an array of objects (one for each requested city) containing this information:
   [
