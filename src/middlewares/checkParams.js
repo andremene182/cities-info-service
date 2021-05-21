@@ -16,11 +16,15 @@ const requiredParams = (params) => (req, res, next) => {
 			reqParamList.includes(param) && req.body[param] != false
 	);
 	
-	if (!hasAllRequiredParams) 
-    //next(structures.json.errorSchema(i18n.__('params_required', params.join(",")) , 400, 2, req))
-		next('Cities richiesta');
-	else
-		next();
+	try{
+		if (!hasAllRequiredParams) 
+			throw new Error("The param 'cities' is required for the service.");
+		else
+			next();
+	} catch (e) {
+		e.status = 400;
+		next(e);
+	}
 };
 
 module.exports = 

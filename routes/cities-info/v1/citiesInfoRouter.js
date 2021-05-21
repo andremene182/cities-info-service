@@ -25,6 +25,7 @@ router.get('/', check.requiredParams(['cities']), async(req, res, next) => {
     coordinatesResponses = await Promise.all(getCoordinatesRequests(cities));
     coordinatesArr = parseCoordinatesResponses(coordinatesResponses);
   } catch (e) {
+    e.status = 400;
     e.message = "Please check your params. One or more cities in your request doesn't exist."
     next(e);
   }
