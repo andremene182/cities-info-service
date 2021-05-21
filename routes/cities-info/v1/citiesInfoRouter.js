@@ -41,7 +41,6 @@ router.get('/', check.requiredParams(['cities']), async(req, res, next) => {
     e.message = "Service error. Please check your params and retry."
     next(e)
   }
-
 });
 
 module.exports = router;
