@@ -1,5 +1,6 @@
-# enhancers-test
-Test for Enhancers S.p.A.
+# cities info
+Cities info web service. 
+It gives you information about weather and businesses about up to 5 cities for every request.
 
 ## Installation
 Use npm install to install all the dependencies.
